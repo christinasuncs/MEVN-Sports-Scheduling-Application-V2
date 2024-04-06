@@ -81,7 +81,7 @@ export default {
   methods: {
     async login() {
       try{
-        const response = await axios.post(`http://localhost:3000/auth/login`, this.user)
+        const response = await axios.post(`${this.$hostname}/auth/login`, this.user)
         if (response.data === "Success") {
           localStorage.setItem('isLoggedIn', true);
           localStorage.setItem('userEmail', this.user.email)

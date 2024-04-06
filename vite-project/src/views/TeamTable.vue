@@ -181,7 +181,7 @@ export default {
   methods: {
     async fetchCampus(){
       try{
-        const campus = await axios.get("http://localhost:3000/api/campus");
+        const campus = await axios.get(`${this.$hostname}/api/campus`);
         this.campuses = campus.data;
       } catch (error) {
         console.error("Error fetching events: ", error);
@@ -189,12 +189,12 @@ export default {
     },
     async fetchTeams(){
       try{
-        const teams = await axios.get("http://localhost:3000/api/team");
+        const teams = await axios.get(`${this.$hostname}/api/team`);
         this.teams = teams.data;
         for (let i = 0; i < teams.data.length; i++){
           const team = this.teams[i];
 
-          const campus = await axios.get(`http://localhost:3000/api/campus/${team.campus}`);
+          const campus = await axios.get(`${this.$hostname}/api/campus/${team.campus}`);
           this.teams[i].campus = campus.data.name
         }
         this.loading = false;
@@ -240,9 +240,9 @@ export default {
         });
         this.editedItem.campus = campusNameToIdMap[this.editedItem.campus];
         if (this.editedIndex > -1) {
-          await axios.put(`http://localhost:3000/api/team/${this.editedItem._id}`, this.editedItem);
+          await axios.put(`${this.$hostname}/api/team/${this.editedItem._id}`, this.editedItem);
         } else {
-          await axios.post(`http://localhost:3000/api/team`, this.editedItem)
+          await axios.post(`${this.$hostname}/api/team`, this.editedItem)
         }
         this.loading = true;
         await this.fetchTeams();

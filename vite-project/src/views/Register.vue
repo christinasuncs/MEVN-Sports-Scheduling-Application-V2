@@ -81,7 +81,7 @@ export default {
   methods: {
     async register(){
       try{
-        const response = await axios.post(`http://localhost:3000/auth/register`, this.user)
+        const response = await axios.post(`${this.$hostname}/auth/register`, this.user)
         localStorage.setItem('isLoggedIn', true);
         localStorage.setItem('userEmail', this.user.email)
         if (response.status === 201) {

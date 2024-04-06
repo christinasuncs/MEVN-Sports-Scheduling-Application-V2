@@ -182,7 +182,7 @@ export default {
   methods: {
     async fetchTeams(){
       try{
-        const teams = await axios.get("http://localhost:3000/api/team");
+        const teams = await axios.get(`${this.$hostname}/api/team`);
         this.teams = teams.data;
       } catch (error) {
         console.error("Error fetching teams: ", error);
@@ -190,14 +190,14 @@ export default {
     },
     async fetchLeagues(){
       try{
-        const leagues = await axios.get("http://localhost:3000/api/league");
+        const leagues = await axios.get(`${this.$hostname}/api/league`);
         this.leagues = leagues.data;
         for (let i = 0; i < leagues.data.length; i++){
           const league = this.leagues[i];
 
           let teams = [];
           for (let j = 0; j < league.teams.length; j++) {
-            const team = await axios.get(`http://localhost:3000/api/team/${league.teams[j]}`);
+            const team = await axios.get(`${this.$hostname}/api/team/${league.teams[j]}`);
             teams.push(team.data.name);
           }
           this.leagues[i].team = teams.join(", ")
@@ -226,7 +226,7 @@ export default {
     async deleteItemConfirm () {
       try {
         this.leagues.splice(this.editedIndex, 1)
-        await axios.delete(`http://localhost:3000/api/league/${this.editedItem._id}`)
+        await axios.delete(`${this.$hostname}/api/league/${this.editedItem._id}`)
         this.closeDelete()
       } catch (error) {
         console.error("Error saving event: ", error);
@@ -259,9 +259,9 @@ export default {
           return teamNameToIdMap[teamName];
         });
         if (this.editedIndex > -1) {
-          await axios.put(`http://localhost:3000/api/league/${this.editedItem._id}`, this.editedItem);
+          await axios.put(`${this.$hostname}/api/league/${this.editedItem._id}`, this.editedItem);
         } else {
-          await axios.post(`http://localhost:3000/api/league`, this.editedItem)
+          await axios.post(`${this.$hostname}/api/league`, this.editedItem)
         }
         this.loading = true;
         await this.fetchLeagues();

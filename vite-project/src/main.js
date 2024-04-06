@@ -27,6 +27,8 @@ const vuetify = createVuetify({
 const app = createApp(App)
 app.component("AppLink", AppLink)
 
+app.config.globalProperties.$hostname = "https://mevn-sports-scheduling-application-0zie.onrender.com"
+
 app.use(router)
 app.use(vuetify)
 app.use(VueGoogleMaps, {

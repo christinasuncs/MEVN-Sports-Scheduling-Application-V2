@@ -297,7 +297,7 @@ export default {
   methods: {
     async fetchCampus(){
       try{
-        const campus = await axios.get("http://localhost:3000/api/campus");
+        const campus = await axios.get(`${this.$hostname}/api/campus`);
         this.campuses = campus.data;
       } catch (error) {
         console.error("Error fetching events: ", error);
@@ -305,7 +305,7 @@ export default {
     },
     async fetchTeams(){
       try{
-        const teams = await axios.get("http://localhost:3000/api/team");
+        const teams = await axios.get(`${this.$hostname}/api/team`);
         this.teams = teams.data;
       } catch (error) {
         console.error("Error fetching events: ", error);
@@ -313,7 +313,7 @@ export default {
     },
     async fetchEvents(){
       try {
-        const events = await axios.get("http://localhost:3000/api/event");
+        const events = await axios.get(`${this.$hostname}/api/event`);
         this.events = events.data;
         this.events.map(event => {
           event.date = event.date.split("T")[0]
@@ -323,12 +323,12 @@ export default {
           const event = this.events[i];
           let teams = [];
           for (let j = 0; j < event.teams.length; j++) {
-            const team = await axios.get(`http://localhost:3000/api/team/${event.teams[j]}`);
+            const team = await axios.get(`${this.$hostname}/api/team/${event.teams[j]}`);
             teams.push(team.data.name);
           }
           this.events[i].team = teams.length == 1 ? teams[0] : `${teams[0]} vs ${teams[1]}`
 
-          const campus = await axios.get(`http://localhost:3000/api/campus/${event.campus}`);
+          const campus = await axios.get(`${this.$hostname}/api/campus/${event.campus}`);
           this.events[i].campus = campus.data.name
         }
         this.loading = false;
@@ -355,7 +355,7 @@ export default {
     async deleteItemConfirm () {
       try {
         this.events.splice(this.editedIndex, 1)
-        await axios.delete(`http://localhost:3000/api/event/${this.editedItem._id}`)
+        await axios.delete(`${this.$hostname}/api/event/${this.editedItem._id}`)
         this.closeDelete()
       } catch (error) {
         console.error("Error saving event: ", error);
@@ -398,16 +398,16 @@ export default {
         });
         this.editedItem.campus = campusNameToIdMap[this.editedItem.campus];
         if (this.editedIndex > -1) {
-          await axios.put(`http://localhost:3000/api/event/${this.editedItem._id}`, this.editedItem);
+          await axios.put(`${this.$hostname}/api/event/${this.editedItem._id}`, this.editedItem);
         } else {
-          await axios.post(`http://localhost:3000/api/event`, this.editedItem)
+          await axios.post(`${this.$hostname}/api/event`, this.editedItem)
         }
         this.loading = true;
         await this.fetchEvents();
         this.close();
 
         // send email
-        await axios.post("http://localhost:3000/api/email/update", {
+        await axios.post(`${this.$hostname}/api/email/update`, {
           email,
           event_type,
           message
@@ -424,7 +424,7 @@ export default {
         campusNameToIdMap[campus.name] = campus.address;
       });
       const address = campusNameToIdMap[item.campus];
-      const response = await axios.get(`http://localhost:3000/api/map/${address}`)
+      const response = await axios.get(`${this.$hostname}/api/map/${address}`)
       this.selectedLocation = response.data.results[0].geometry.location;
       this.mapLoading = false;
     }
