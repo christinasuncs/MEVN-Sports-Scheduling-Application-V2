@@ -16,9 +16,6 @@ const routes = [
     path: "/register",
     name: "register",
     component: () => import("@/views/Register.vue"),
-    meta: {
-      requiresAuth: localStorage.getItem('isLoggedIn'),
-    }
   },
   {
     path: "/event",
