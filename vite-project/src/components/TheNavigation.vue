@@ -26,9 +26,9 @@
 
     <v-navigation-drawer v-model="sidebar">
       <v-list>
-        <v-list-item link title="Events" href="/event"></v-list-item>
-        <v-list-item link title="Teams" href="/team"></v-list-item>
-        <v-list-item link title="Leagues" href="/league"></v-list-item>
+        <v-list-item><AppLink to="/event">Events</AppLink></v-list-item>
+        <v-list-item><AppLink to="/team">Teams</AppLink></v-list-item>
+        <v-list-item><AppLink to="/league">Leagues</AppLink></v-list-item>
       </v-list>
     </v-navigation-drawer>
   </div>
@@ -45,7 +45,9 @@ export default {
     logout() {
       localStorage.setItem('isLoggedIn', false);
       localStorage.setItem('userEmail', "")
+      this.$router.push({ path: '/' }).then(() => {
       window.location.reload();
+      }); // Change '/success' to the desired route
     }
   }
 }

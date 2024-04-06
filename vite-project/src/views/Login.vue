@@ -55,13 +55,8 @@
       </v-btn>
 
       <v-card-text class="text-center">
-        <a
-          class="text-blue text-decoration-none"
-          href="/register"
-          rel="noopener noreferrer"
-        >
-          Sign up now <v-icon icon="mdi-chevron-right"></v-icon>
-        </a>
+        <AppLink to="/register">Sign up now <v-icon icon="mdi-chevron-right"></v-icon></AppLink>
+
       </v-card-text>
     </v-card>
   </div>
