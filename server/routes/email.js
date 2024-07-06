@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
@@ -5,10 +6,10 @@ const axios = require('axios');
 // send reminder email
 router.post("/reminder", async (req, res) => {
     let data = JSON.stringify({
-        "service_id": "service_spv6kze",
+        "service_id": process.env.EMAILJS_SERVICEID,
         "template_id": "template_i44uwf9",
-        "user_id": "Dp0N7FXKjoqROrfpK",
-        "accessToken": "k4UPdZZTd6ehVmnoSwWXl",
+        "user_id": process.env.EMAILJS_USERID,
+        "accessToken": process.env.EMAILJS_ACCESSTOKEN,
         "template_params": {
             "to_name": "User",
             "to_email": req.body.email,
@@ -40,10 +41,10 @@ router.post("/reminder", async (req, res) => {
 
 router.post("/update", async (req, res) => {
     let data = JSON.stringify({
-        "service_id": "service_spv6kze",
+        "service_id": process.env.EMAILJS_SERVICEID,
         "template_id": "template_zwyhdl8",
-        "user_id": "Dp0N7FXKjoqROrfpK",
-        "accessToken": "k4UPdZZTd6ehVmnoSwWXl",
+        "user_id": process.env.EMAILJS_USERID,
+        "accessToken": process.env.EMAILJS_ACCESSTOKEN,
         "template_params": {
             "to_name": "User",
             "to_email": req.body.email,

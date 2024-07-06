@@ -1,12 +1,12 @@
+require('dotenv').config()
 const express = require('express');
 const router = express.Router();
 const axios = require('axios');
 
-// get all league
 router.get("/:address", async (req, res) => {
   var config = {
     method: 'get',
-    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${req.params.address}&key=AIzaSyC1J8rbjY3B-Y-dzoWU7jl6hAW4jAh-yRk`,
+    url: `https://maps.googleapis.com/maps/api/geocode/json?address=${req.params.address}&key=${process.env.GOOGLEMAPS_KEY}`,
     headers: { }
   };
   
